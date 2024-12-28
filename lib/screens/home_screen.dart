@@ -1,11 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:foodbar/model/food_model.dart';
-import 'package:foodbar/model/response_model.dart';
-import 'package:foodbar/screens/food_detail_screen.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:http/http.dart' as http;
+import 'package:foodbar/screens/scanner_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,54 +9,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
-  String errorMessage = "";
-  bool loading = false;
-  bool scanned = false;
-
-  Future<void> _handleBarcode(String barcode) async {
-    setState(() {
-      errorMessage = "";
-      loading = true;
-      scanned = true;
-    });
-
-    if (int.tryParse(barcode) == null) {
-      setState(() {
-        errorMessage = "Invalid barcode";
-        loading = false;
-      });
-      return;
-    }
-
-    final rawResponse = await http.get(
-      Uri.parse("https://foodbar-api.safatanc.com/product/$barcode"),
-    );
-
-    final Map parseResponse = json.decode(rawResponse.body);
-    final response = APIResponse.fromJson(parseResponse);
-
-    if (response.code == 200) {
-      final food = Food.fromJson(response.data);
-
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => FoodDetailScreen(
-            food: food,
-          ),
-        ),
-      );
-    } else {
-      setState(() {
-        errorMessage = response.message;
-        loading = false;
-      });
-    }
-
-    setState(() {
-      loading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,52 +23,178 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         foregroundColor: Colors.white,
       ),
       backgroundColor: Colors.grey.shade100,
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-            child: Center(
-              child: loading == true
-                  ? const Text("Loading...")
-                  : errorMessage == ""
-                      ? const Text(
-                          "Scan barcode untuk melihat sertifikat halal",
-                          style: TextStyle(fontWeight: FontWeight.w500),
-                        )
-                      : const SizedBox(),
-            ),
-          ),
-          scanned == false
-              ? Expanded(
-                  child: MobileScanner(
-                    onDetect: (barcodes) {
-                      _handleBarcode(barcodes.barcodes.first.rawValue!);
-                    },
-                  ),
-                )
-              : Column(
-                  children: [
-                    errorMessage != ""
-                        ? Text(
-                            "Error: $errorMessage",
-                            style: const TextStyle(color: Colors.red),
-                          )
-                        : const SizedBox(),
-                    TextButton(
-                      onPressed: () {
-                        setState(() {
-                          errorMessage = "";
-                          scanned = false;
-                        });
-                      },
-                      style: const ButtonStyle(
-                        foregroundColor: WidgetStatePropertyAll(Colors.green),
-                      ),
-                      child: const Text("Try Again"),
-                    ),
-                  ],
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /**
+             * Hero
+             */
+            const Row(
+              children: [
+                Image(
+                  image: AssetImage("assets/logo.png"),
+                  width: 60,
+                  height: 60,
                 ),
-        ],
+                SizedBox(
+                  width: 8,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Foodbar App",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                        "Pastikan makanan dalam kemasan\nbersertifikasi halal asli."),
+                  ],
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+
+            /**
+             * Quick Start
+             */
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey.shade300,
+              ),
+              width: MediaQuery.sizeOf(context).width,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              child: Column(
+                children: [
+                  const Text(
+                    "Quick Start",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      /**
+                       * Scan Barcode
+                       */
+                      TextButton(
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ScannerScreen(),
+                            ),
+                          ),
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          width: 100,
+                          child: const Column(
+                            children: [
+                              Icon(
+                                Icons.qr_code_scanner,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Scan Barcode",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+
+                      /**
+                       * Search
+                       */
+                      TextButton(
+                        onPressed: () => {},
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          width: 100,
+                          child: const Column(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Search",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        constraints: BoxConstraints.loose(const Size.fromHeight(50)),
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(50),
+            topRight: Radius.circular(50),
+          ),
+          color: Colors.green,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        child: Stack(
+          alignment: Alignment.topCenter,
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              top: -20,
+              child: IconButton(
+                onPressed: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ScannerScreen(),
+                    ),
+                  ),
+                },
+                icon: const Icon(
+                  Icons.qr_code_scanner,
+                ),
+                style: ButtonStyle(
+                  backgroundColor:
+                      WidgetStatePropertyAll(Colors.green.shade100),
+                  foregroundColor: const WidgetStatePropertyAll(Colors.green),
+                  minimumSize: const WidgetStatePropertyAll(Size(100, 60)),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
