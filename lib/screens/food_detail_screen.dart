@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foodbar/model/food_model.dart';
 
 class FoodDetailScreen extends StatelessWidget {
-  final Food food;
-  const FoodDetailScreen({super.key, required this.food});
+  final FoodWithHalalData foodWithHalalData;
+  const FoodDetailScreen({super.key, required this.foodWithHalalData});
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +40,14 @@ class FoodDetailScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        food.name,
+                        foodWithHalalData.food.name,
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Text(
-                        food.barcode,
+                        foodWithHalalData.food.barcode,
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -96,7 +96,8 @@ class FoodDetailScreen extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          food.certificate ?? "Tidak ditemukan",
+                          foodWithHalalData.food.certificate ??
+                              "Tidak ditemukan",
                           style: const TextStyle(
                             color: Colors.white,
                           ),
@@ -126,13 +127,13 @@ class FoodDetailScreen extends StatelessWidget {
                             horizontal: 24,
                             vertical: 8,
                           ),
-                          child: const Column(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
+                              const Row(
                                 children: [
                                   Icon(
-                                    Icons.access_time,
+                                    Icons.business_center,
                                     color: Colors.white,
                                     size: 16,
                                   ),
@@ -140,7 +141,7 @@ class FoodDetailScreen extends StatelessWidget {
                                     width: 4,
                                   ),
                                   Text(
-                                    "Diterbitkan",
+                                    "Diterbitkan Oleh",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -150,8 +151,8 @@ class FoodDetailScreen extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "27 Desember 2024",
-                                style: TextStyle(
+                                foodWithHalalData.halalData.namaProdusen,
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 10,
                                 ),

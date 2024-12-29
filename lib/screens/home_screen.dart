@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodbar/screens/scanner_screen.dart';
+import 'package:foodbar/screens/search_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -123,7 +124,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                        * Search
                        */
                       TextButton(
-                        onPressed: () => {},
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SearchScreen(),
+                            ),
+                          )
+                        },
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(

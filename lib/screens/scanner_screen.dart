@@ -43,12 +43,12 @@ class _ScannerScreenState extends State<ScannerScreen>
     final response = APIResponse.fromJson(parseResponse);
 
     if (response.code == 200) {
-      final food = Food.fromJson(response.data);
+      final foodWithHalalData = FoodWithHalalData.fromJson(response.data);
 
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => FoodDetailScreen(
-            food: food,
+            foodWithHalalData: foodWithHalalData,
           ),
         ),
       );
