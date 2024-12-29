@@ -54,7 +54,7 @@ class _ScannerScreenState extends State<ScannerScreen>
       );
     } else {
       setState(() {
-        errorMessage = response.message;
+        errorMessage = "Barcode $barcode ${response.message}";
         loading = false;
       });
     }
@@ -68,11 +68,9 @@ class _ScannerScreenState extends State<ScannerScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text(
-            "Foodbar",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
+        title: const Text(
+          "Foodbar",
+          style: TextStyle(fontWeight: FontWeight.bold),
         ),
         backgroundColor: Colors.green,
         foregroundColor: Colors.white,
@@ -115,6 +113,26 @@ class _ScannerScreenState extends State<ScannerScreen>
                             style: const TextStyle(color: Colors.red),
                           )
                         : const SizedBox(),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          errorMessage = "";
+                          scanned = false;
+                        });
+                      },
+                      style: const ButtonStyle(
+                          foregroundColor: WidgetStatePropertyAll(Colors.white),
+                          backgroundColor:
+                              WidgetStatePropertyAll(Colors.green)),
+                      child: const Text("Coba Lagi"),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    const Text("Atau"),
                     TextButton(
                       onPressed: () {
                         setState(() {
@@ -125,7 +143,7 @@ class _ScannerScreenState extends State<ScannerScreen>
                       style: const ButtonStyle(
                         foregroundColor: WidgetStatePropertyAll(Colors.green),
                       ),
-                      child: const Text("Try Again"),
+                      child: const Text("Gunakan Pencarian"),
                     ),
                   ],
                 ),
