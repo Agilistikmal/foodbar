@@ -50,6 +50,6 @@ class FoodWithHalalData {
   FoodWithHalalData({required this.food, required this.halalData});
 
   FoodWithHalalData.fromJson(Map<dynamic, dynamic> json)
-      : food = json["product"],
-        halalData = json["halal_data"];
+      : food = Food.fromJson(json["product"]),
+        halalData = HalalData.fromJson(json["halal_data"]);
 }

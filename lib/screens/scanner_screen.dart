@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:foodbar/model/food_model.dart';
 import 'package:foodbar/model/response_model.dart';
 import 'package:foodbar/screens/food_detail_screen.dart';
+import 'package:foodbar/screens/search_screen.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,7 +83,9 @@ class _ScannerScreenState extends State<ScannerScreen>
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
             child: Center(
               child: loading == true
-                  ? const Text("Loading...")
+                  ? const LinearProgressIndicator(
+                      color: Colors.green,
+                    )
                   : errorMessage == ""
                       ? const Text(
                           "Scan barcode untuk melihat sertifikat halal",
@@ -135,10 +138,11 @@ class _ScannerScreenState extends State<ScannerScreen>
                     const Text("Atau"),
                     TextButton(
                       onPressed: () {
-                        setState(() {
-                          errorMessage = "";
-                          scanned = false;
-                        });
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => const SearchScreen(),
+                          ),
+                        );
                       },
                       style: const ButtonStyle(
                         foregroundColor: WidgetStatePropertyAll(Colors.green),
