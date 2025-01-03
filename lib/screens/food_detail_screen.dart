@@ -36,21 +36,34 @@ class FoodDetailScreen extends StatelessWidget {
                     color: Colors.white,
                     size: 50,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        foodWithHalalData.food.name,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          foodWithHalalData.food.name,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                      Text(
-                        foodWithHalalData.food.barcode,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                    ],
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.qr_code_scanner,
+                              color: Colors.white,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              foodWithHalalData.food.barcode,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -70,37 +83,43 @@ class FoodDetailScreen extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Colors.green,
+                      color: Colors.white,
                     ),
                     padding:
                         const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Row(
+                        Row(
                           children: [
-                            Icon(
-                              Icons.shield,
-                              color: Colors.white,
+                            const Image(
+                              image: AssetImage("assets/logo_halal.png"),
+                              width: 40,
+                              height: 40,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 4,
                             ),
-                            Text(
-                              "Sertifikat Halal",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Sertifikat Halal",
+                                  style: TextStyle(
+                                    color: Colors.purple,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  foodWithHalalData.food.certificate ??
+                                      "Tidak ditemukan",
+                                  style: const TextStyle(
+                                    color: Colors.purple,
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
-                        ),
-                        Text(
-                          foodWithHalalData.food.certificate ??
-                              "Tidak ditemukan",
-                          style: const TextStyle(
-                            color: Colors.white,
-                          ),
                         ),
                       ],
                     ),
@@ -110,109 +129,98 @@ class FoodDetailScreen extends StatelessWidget {
                    * Certificate Validity
                    */
                   const SizedBox(
+                    height: 16,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.green,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.business_center,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "Diproduksi Oleh",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Text(
+                          foodWithHalalData.halalData.namaProdusen,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  /**
+                   * Expired At
+                   */
+                  const SizedBox(
                     height: 8,
                   ),
-                  Row(
-                    children: [
-                      /**
-                       * Released At
-                       */
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.green,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 8,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Row(
-                                children: [
-                                  Icon(
-                                    Icons.business_center,
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    "Diterbitkan Oleh",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                ],
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.green,
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 24,
+                      vertical: 8,
+                    ),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.access_time,
+                              color: Colors.white,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "Berlaku hingga",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 11,
                               ),
-                              Text(
-                                foodWithHalalData.halalData.namaProdusen,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "27 Desember 2024",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
                           ),
                         ),
-                      ),
-
-                      /**
-                       * Expired At
-                       */
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.green,
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 8,
-                          ),
-                          child: const Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.access_time,
-                                    color: Colors.white,
-                                    size: 16,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Text(
-                                    "Berlaku hingga",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 11,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                "27 Desember 2024",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

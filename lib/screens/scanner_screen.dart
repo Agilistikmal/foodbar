@@ -46,7 +46,7 @@ class _ScannerScreenState extends State<ScannerScreen>
     if (response.code == 200) {
       final foodWithHalalData = FoodWithHalalData.fromJson(response.data);
 
-      Navigator.of(context).push(
+      Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => FoodDetailScreen(
             foodWithHalalData: foodWithHalalData,

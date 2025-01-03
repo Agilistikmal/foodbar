@@ -145,7 +145,7 @@ class _SearchScreenState extends State<SearchScreen>
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.green,
+                                        color: Colors.white,
                                       ),
                                       padding: const EdgeInsets.symmetric(
                                         horizontal: 8,
@@ -158,7 +158,7 @@ class _SearchScreenState extends State<SearchScreen>
                                           const Icon(
                                             Icons.badge,
                                             size: 16,
-                                            color: Colors.white,
+                                            color: Colors.green,
                                           ),
                                           const SizedBox(
                                             width: 2,
@@ -167,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen>
                                             food.nomorSertifikat,
                                             style: const TextStyle(
                                               fontSize: 11,
-                                              color: Colors.white,
+                                              color: Colors.green,
                                             ),
                                           ),
                                         ],
@@ -176,7 +176,7 @@ class _SearchScreenState extends State<SearchScreen>
                                   ),
 
                                   /**
-                                   * Expired At
+                                   * Halal Logo
                                    */
                                   const SizedBox(
                                     width: 8,
@@ -184,33 +184,61 @@ class _SearchScreenState extends State<SearchScreen>
                                   Container(
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(50),
-                                      color: Colors.green,
+                                      color: Colors.white,
                                     ),
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 8,
                                       vertical: 4,
                                     ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Icons.access_time,
-                                          size: 16,
-                                          color: Colors.white,
-                                        ),
-                                        const SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          food.expireDate,
-                                          style: const TextStyle(
-                                            fontSize: 11,
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
+                                    child: const Image(
+                                      image: AssetImage(
+                                        "assets/logo_halal.png",
+                                      ),
+                                      width: 20,
+                                      height: 20,
                                     ),
                                   ),
                                 ],
+                              ),
+
+                              /**
+                               * Expired At
+                               */
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  color: Colors.green,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.access_time,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      "Berlaku hingga ${food.expireDate}",
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 8,
                               )
                             ],
                           ),
